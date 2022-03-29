@@ -57,8 +57,10 @@ namespace Cheffie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CookId,Name,Email,Skill,DOB,FilePath")] Cook cook)
+        public async Task<IActionResult> Create([Bind("CookId,Name,Email,Skill,DOB,File")] Cook cook)
         {
+                         
+                
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _hostEnvironment.WebRootPath;
