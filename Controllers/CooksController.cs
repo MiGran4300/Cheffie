@@ -101,7 +101,7 @@ namespace Cheffie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CookId,Name,Email,Skill,DOB")] Cook cook)
+        public async Task<IActionResult> Edit(int id, [Bind("CookId,Name,Email,Skill,DOB, File")] Cook cook)
         {
             if (id != cook.CookId)
             {
@@ -112,6 +112,15 @@ namespace Cheffie.Controllers
             {
                 try
                 {
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(cook.File.FileName);
+                    string extension = Path.GetExtension(cook.File.FileName);
+                    cook.FilePath = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/upload/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await cook.File.CopyToAsync(fileStream);
+                    }
                     _context.Update(cook);
                     await _context.SaveChangesAsync();
                 }

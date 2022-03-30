@@ -16,5 +16,7 @@ namespace Cheffie.Data
         }
 
         public DbSet<Cheffie.Models.Cook> Cook { get; set; }
+        public DbSet<Cheffie.Models.Cook> Post { get; set; }
+        public DbSet<Cheffie.Models.Post> Post_1 { get; set; }
     }
 }
