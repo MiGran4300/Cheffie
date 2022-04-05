@@ -11,7 +11,7 @@ namespace Cheffie.Models
         [Display(Name = "Съдържание")]
         public string? Content { get; set; }
         [Display(Name = "Дата на публикуване")]
-        public DateTime? PostDate { get; set;}
+        public DateTime? PostDate { get; set;} = DateTime.Now;
         [Display(Name = "Автор")]
         public Cook? Cook { get; set; }
 

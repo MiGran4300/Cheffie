@@ -24,6 +24,7 @@ namespace Cheffie.Models
         [DisplayName("Upload File")]
         public IFormFile? File { get; set; }
 
+        public ICollection<Post>? posts { get; set; }
 
     }
 }

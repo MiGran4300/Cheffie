@@ -23,7 +23,7 @@ namespace Cheffie.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var cheffieContext = _context.Post_1.Include(p => p.Cook);
+            var cheffieContext = _context.Post.Include(p => p.Cook);
             return View(await cheffieContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace Cheffie.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Post_1
+            var post = await _context.Post
                 .Include(p => p.Cook)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
@@ -78,7 +78,7 @@ namespace Cheffie.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Post_1.FindAsync(id);
+            var post = await _context.Post.FindAsync(id);
             if (post == null)
             {
                 return NotFound();
@@ -131,7 +131,7 @@ namespace Cheffie.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Post_1
+            var post = await _context.Post
                 .Include(p => p.Cook)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
@@ -147,15 +147,15 @@ namespace Cheffie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Post_1.FindAsync(id);
-            _context.Post_1.Remove(post);
+            var post = await _context.Post.FindAsync(id);
+            _context.Post.Remove(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PostExists(int id)
         {
-            return _context.Post_1.Any(e => e.PostId == id);
+            return _context.Post.Any(e => e.PostId == id);
         }
     }
 }
