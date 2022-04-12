@@ -13,7 +13,8 @@ namespace Cheffie.Models
         [Display(Name = "Дата на публикуване")]
         public DateTime? PostDate { get; set;} = DateTime.Now;
         [Display(Name = "Автор")]
+        
         public Cook? Cook { get; set; }
-
+        public ICollection<PostComment>? PostsComments { get; set;}
     }
 }
