@@ -5,6 +5,7 @@ namespace Cheffie.Models
     public class Post
     {
         public int PostId { get; set; }
+        [Display(Name = "Име")]
         public int CookId { get; set; }
         [Display(Name="Заглавие")]
         public string? Title { get; set; }

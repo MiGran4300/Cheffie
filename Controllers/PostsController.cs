@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cheffie.Data;
 using Cheffie.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Cheffie.Controllers
 {
     public class PostsController : Controller
     {
         private readonly CheffieContext _context;
+        UserManager<IdentityUser> userManager;
 
-        public PostsController(CheffieContext context)
+        public PostsController(CheffieContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Posts
@@ -49,7 +54,8 @@ namespace Cheffie.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "CookId");
+            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "Name");
+            
             return View();
         }
 
@@ -62,11 +68,13 @@ namespace Cheffie.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "CookId", post.CookId);
+           
+            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "Name", post.CookId);
             return View(post);
         }
 
@@ -83,7 +91,7 @@ namespace Cheffie.Controllers
             {
                 return NotFound();
             }
-            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "CookId", post.CookId);
+            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "Name", post.CookId);
             return View(post);
         }
 
@@ -119,7 +127,7 @@ namespace Cheffie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "CookId", post.CookId);
+            ViewData["CookId"] = new SelectList(_context.Cook, "CookId", "Name", post.CookId);
             return View(post);
         }
 

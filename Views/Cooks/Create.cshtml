@@ -1,4 +1,6 @@
-﻿@model Cheffie.Models.Cook
+﻿@using Microsoft.AspNetCore.Identity
+@model Cheffie.Models.Cook
+@inject UserManager<IdentityUser> UserManager;
 
 @{
     ViewData["Title"] = "Create";
@@ -12,6 +14,7 @@
     <div class="col-md-4">
         <form enctype = "multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OwnerID" value="@UserManager.GetUserId(User)">
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />

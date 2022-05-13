@@ -1,5 +1,7 @@
 ﻿@model Cheffie.Models.Cook
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager;
+@inject SignInManager<IdentityUser> signInManager;
 @{
     ViewData["Title"] = "Details";
 }
@@ -44,6 +46,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CookId">Edit</a> |
+    @if (signInManager.IsSignedIn(User) && @UserManager.GetUserId(User) == Model.OwnerID)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.CookId">Edit</a>
+    }
+    |
     <a asp-action="Index">Back to List</a>
 </div>

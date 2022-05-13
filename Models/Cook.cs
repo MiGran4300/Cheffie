@@ -8,6 +8,7 @@ namespace Cheffie.Models
     {
        
        public int CookId { get; set; }
+        public string? OwnerID { get; set; }
         [Display(Name ="Име")]
         public string? Name { get; set; }
        public string? Email { get; set; }
@@ -21,7 +22,7 @@ namespace Cheffie.Models
         [DisplayName("File Name")]
         public string? FilePath { get; set; }
         [NotMapped]
-        [DisplayName("Upload File")]
+        [DisplayName("Снимка/Аватар")]
         public IFormFile? File { get; set; }
 
         public ICollection<Post>? posts { get; set; }

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cheffie.Data;
 using Cheffie.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cheffie.Controllers
 {
@@ -15,11 +17,13 @@ namespace Cheffie.Controllers
     {
         private readonly CheffieContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private UserManager<IdentityUser> userManager;
 
-        public CooksController(CheffieContext context, IWebHostEnvironment hostEnvironment)
+        public CooksController(CheffieContext context, IWebHostEnvironment hostEnvironment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             this._hostEnvironment = hostEnvironment;
+            this.userManager = userManager;
         }
 
         // GET: Cooks
@@ -55,9 +59,10 @@ namespace Cheffie.Controllers
         // POST: Cooks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CookId,Name,Email,Skill,DOB,File")] Cook cook)
+        public async Task<IActionResult> Create([Bind("CookId,Name,Email,Skill,DOB,File,OwnerID")] Cook cook)
         {
                          
                 
@@ -99,6 +104,7 @@ namespace Cheffie.Controllers
         // POST: Cooks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CookId,Name,Email,Skill,DOB, File")] Cook cook)
